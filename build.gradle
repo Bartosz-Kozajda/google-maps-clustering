@@ -20,6 +20,7 @@ allprojects {
             url "https://maven.google.com"
         }
         google()
+        maven { url 'https://developer.huawei.com/repo/' } // HUAWEI Maven repository
     }
 }
 
@@ -32,10 +33,10 @@ ext {
     versionName = '0.1.5'
 
     minSdkVersion = 16
-    targetSdkVersion = 27
-    compileSdkVersion = 27
-    buildToolsVersion = '26.0.2'
+    targetSdkVersion = 29
+    compileSdkVersion = 29
+    buildToolsVersion = '29.0.3'
 
-    supportVersion = '27.0.2'
-    playServicesVersion = '11.8.0'
+    supportVersion = '28.0.0'
+    playServicesVersion = '17.0.0'
 }

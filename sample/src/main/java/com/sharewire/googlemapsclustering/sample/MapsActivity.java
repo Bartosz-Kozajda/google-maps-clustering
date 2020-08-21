@@ -12,8 +12,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
-import net.sharewire.googlemapsclustering.Cluster;
-import net.sharewire.googlemapsclustering.ClusterManager;
+import net.sharewire.mapsclustering.Cluster;
 
 import java.util.ArrayList;
 import java.util.List;

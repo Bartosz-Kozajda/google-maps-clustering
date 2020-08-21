@@ -1,12 +1,17 @@
-package net.sharewire.googlemapsclustering;
+package net.sharewire.mapsclustering.huawei;
 
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.LatLngBounds;
+
+import com.huawei.hms.maps.HuaweiMap;
+import com.huawei.hms.maps.model.LatLngBounds;
+
+import net.sharewire.mapsclustering.Cluster;
+import net.sharewire.mapsclustering.ClusterItem;
+import net.sharewire.mapsclustering.QuadTree;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,26 +19,26 @@ import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import static net.sharewire.googlemapsclustering.Preconditions.checkArgument;
-import static net.sharewire.googlemapsclustering.Preconditions.checkNotNull;
+import static net.sharewire.mapsclustering.Preconditions.checkArgument;
+import static net.sharewire.mapsclustering.Preconditions.checkNotNull;
 
 /**
  * Groups multiple items on a map into clusters based on the current zoom level.
  * Clustering occurs when the map becomes idle, so an instance of this class
- * must be set as a camera idle listener using {@link GoogleMap#setOnCameraIdleListener}.
+ * must be set as a camera idle listener using {@link HuaweiMap#setOnCameraIdleListener}.
  *
  * @param <T> the type of an item to be clustered
  */
-public class ClusterManager<T extends ClusterItem> implements GoogleMap.OnCameraIdleListener {
+public class HuaweiClusterManager<T extends ClusterItem> implements HuaweiMap.OnCameraIdleListener {
 
     private static final int QUAD_TREE_BUCKET_CAPACITY = 4;
     private static final int DEFAULT_MIN_CLUSTER_SIZE = 1;
 
-    private final GoogleMap mGoogleMap;
+    private final HuaweiMap mHuaweiMap;
 
     private final QuadTree<T> mQuadTree;
 
-    private final ClusterRenderer<T> mRenderer;
+    private final HuaweiClusterRenderer<T> mRenderer;
 
     private final Executor mExecutor = Executors.newSingleThreadExecutor();
 
@@ -46,7 +51,7 @@ public class ClusterManager<T extends ClusterItem> implements GoogleMap.OnCamera
     /**
      * Defines signatures for methods that are called when a cluster or a cluster item is clicked.
      *
-     * @param <T> the type of an item managed by {@link ClusterManager}.
+     * @param <T> the type of an item managed by {@link HuaweiClusterManager}.
      */
     public interface Callbacks<T extends ClusterItem> {
         /**
@@ -73,14 +78,14 @@ public class ClusterManager<T extends ClusterItem> implements GoogleMap.OnCamera
     /**
      * Creates a new cluster manager using the default icon generator.
      * To customize marker icons, set a custom icon generator using
-     * {@link ClusterManager#setIconGenerator(IconGenerator)}.
+     * {@link HuaweiClusterManager#setIconGenerator(HuaweiIconGenerator)}.
      *
-     * @param googleMap the map instance where markers will be rendered
+     * @param HuaweiMap the map instance where markers will be rendered
      */
-    public ClusterManager(@NonNull Context context, @NonNull GoogleMap googleMap) {
+    public HuaweiClusterManager(@NonNull Context context, @NonNull HuaweiMap HuaweiMap) {
         checkNotNull(context);
-        mGoogleMap = checkNotNull(googleMap);
-        mRenderer = new ClusterRenderer<>(context, googleMap);
+        mHuaweiMap = checkNotNull(HuaweiMap);
+        mRenderer = new HuaweiClusterRenderer<>(context, HuaweiMap);
         mQuadTree = new QuadTree<>(QUAD_TREE_BUCKET_CAPACITY);
     }
 
@@ -89,7 +94,7 @@ public class ClusterManager<T extends ClusterItem> implements GoogleMap.OnCamera
      *
      * @param iconGenerator the custom icon generator that's used for generating marker icons
      */
-    public void setIconGenerator(@NonNull IconGenerator<T> iconGenerator) {
+    public void setIconGenerator(@NonNull HuaweiIconGenerator<T> iconGenerator) {
         checkNotNull(iconGenerator);
         mRenderer.setIconGenerator(iconGenerator);
     }
@@ -141,8 +146,8 @@ public class ClusterManager<T extends ClusterItem> implements GoogleMap.OnCamera
             mClusterTask.cancel(true);
         }
 
-        mClusterTask = new ClusterTask(mGoogleMap.getProjection().getVisibleRegion().latLngBounds,
-                mGoogleMap.getCameraPosition().zoom).executeOnExecutor(mExecutor);
+        mClusterTask = new HuaweiClusterTask(mHuaweiMap.getProjection().getVisibleRegion().latLngBounds,
+                mHuaweiMap.getCameraPosition().zoom).executeOnExecutor(mExecutor);
     }
 
     @NonNull
@@ -246,12 +251,12 @@ public class ClusterManager<T extends ClusterItem> implements GoogleMap.OnCamera
         }
     }
 
-    private class ClusterTask extends AsyncTask<Void, Void, List<Cluster<T>>> {
+    private class HuaweiClusterTask extends AsyncTask<Void, Void, List<Cluster<T>>> {
 
         private final LatLngBounds mLatLngBounds;
         private final float mZoomLevel;
 
-        private ClusterTask(@NonNull LatLngBounds latLngBounds, float zoomLevel) {
+        private HuaweiClusterTask(@NonNull LatLngBounds latLngBounds, float zoomLevel) {
             mLatLngBounds = latLngBounds;
             mZoomLevel = zoomLevel;
         }

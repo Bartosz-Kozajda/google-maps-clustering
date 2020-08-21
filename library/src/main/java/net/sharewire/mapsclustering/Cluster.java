@@ -1,4 +1,4 @@
-package net.sharewire.googlemapsclustering;
+package net.sharewire.mapsclustering;
 
 import android.support.annotation.NonNull;
 
@@ -17,7 +17,7 @@ public class Cluster<T extends ClusterItem> {
     private final double south;
     private final double east;
 
-    Cluster(double latitude, double longitude, @NonNull List<T> items,
+    public Cluster(double latitude, double longitude, @NonNull List<T> items,
             double north, double west, double south, double east) {
         this.latitude = latitude;
         this.longitude = longitude;
@@ -56,7 +56,7 @@ public class Cluster<T extends ClusterItem> {
         return items;
     }
 
-    boolean contains(double latitude, double longitude) {
+    public boolean contains(double latitude, double longitude) {
         return longitude >= west && longitude <= east
                 && latitude <= north && latitude >= south;
     }

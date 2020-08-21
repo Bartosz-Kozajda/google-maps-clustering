@@ -35,7 +35,9 @@ android {
 
 dependencies {
     implementation "com.android.support:support-annotations:$supportVersion"
+    implementation "com.android.support:interpolator:$supportVersion"
     implementation "com.google.android.gms:play-services-maps:$playServicesVersion"
+    implementation 'com.huawei.hms:maps:4.0.1.302'
 }
 
 publish {

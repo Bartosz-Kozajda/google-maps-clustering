@@ -1,15 +1,19 @@
-package net.sharewire.googlemapsclustering;
+package net.sharewire.mapsclustering.huawei;
 
 import android.support.annotation.NonNull;
 
-import com.google.android.gms.maps.model.BitmapDescriptor;
+
+import com.huawei.hms.maps.model.BitmapDescriptor;
+
+import net.sharewire.mapsclustering.Cluster;
+import net.sharewire.mapsclustering.ClusterItem;
 
 /**
  * Generates icons for clusters and cluster items. Note that its implementations
  * should cache generated icons for subsequent use. For the example implementation see
  * {@link DefaultIconGenerator}.
  */
-public interface IconGenerator<T extends ClusterItem> {
+public interface HuaweiIconGenerator<T extends ClusterItem> {
     /**
      * Returns an icon for the given cluster.
      *

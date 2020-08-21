@@ -1,4 +1,4 @@
-package net.sharewire.googlemapsclustering;
+package net.sharewire.mapsclustering;
 
 import android.content.Context;
 import android.util.AttributeSet;

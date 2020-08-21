@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.google.android.gms.maps.model.LatLng;
 
-import net.sharewire.googlemapsclustering.ClusterItem;
+import net.sharewire.mapsclustering.ClusterItem;
 
 class SampleClusterItem implements ClusterItem {
 
