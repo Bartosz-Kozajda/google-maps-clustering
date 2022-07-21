@@ -1,6 +1,6 @@
 package net.sharewire.mapsclustering.huawei;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 
 import com.huawei.hms.maps.model.BitmapDescriptor;

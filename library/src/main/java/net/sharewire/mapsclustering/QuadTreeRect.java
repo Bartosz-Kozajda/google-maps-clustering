@@ -1,6 +1,6 @@
 package net.sharewire.mapsclustering;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 class QuadTreeRect {
 
