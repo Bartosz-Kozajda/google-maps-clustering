@@ -30,11 +30,11 @@ task clean(type: Delete) {
 
 ext {
     versionCode = 2
-    versionName = '2.0.1'
+    versionName = '2.0.2'
 
     minSdkVersion = 19
-    targetSdkVersion = 29
-    compileSdkVersion = 29
+    targetSdkVersion = 31
+    compileSdkVersion = 31
     buildToolsVersion = '30.0.2'
 
     playServicesVersion = '18.0.2'
