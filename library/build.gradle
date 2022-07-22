@@ -43,7 +43,7 @@ afterEvaluate {
             release(MavenPublication) {
                 groupId = 'com.github.FutureMind'
                 artifactId = 'google-maps-clustering'
-                version = '2.0.1'
+                version = '2.0.2'
             }
         }
     }
