@@ -1,13 +1,9 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
 apply plugin: 'maven-publish'
 
 buildscript {
     repositories {
         jcenter()
-    }
-    dependencies {
-        classpath 'com.novoda:bintray-release:0.7.0'
     }
 }
 
@@ -41,22 +37,13 @@ dependencies {
     implementation 'com.huawei.hms:maps:4.0.1.302'
 }
 
-publish {
-    userOrg = 'sharewire'
-    groupId = 'net.sharewire'
-    artifactId = 'google-maps-clustering'
-    publishVersion = rootProject.versionName
-    desc = 'Fast marker clustering library for Google Maps Android API.'
-    website = 'https://github.com/sharewire/google-maps-clustering'
-}
-
 afterEvaluate {
     publishing {
         publications {
             release(MavenPublication) {
                 groupId = 'com.github.FutureMind'
                 artifactId = 'google-maps-clustering'
-                version = '2.0.0'
+                version = '2.0.1'
             }
         }
     }
