@@ -93,3 +93,8 @@ clusterManager.setCallbacks(new ClusterManager.Callbacks<SampleClusterItem>() {
 List<SampleClusterItem> clusterItems = generateSampleClusterItems();
 clusterManager.setItems(clusterItems);
 ```
+
+## Sample
+To run sample in google-maps-clustering project:
+1. Add google_maps_key in strings resources
+2. Add ':sample' in settings.gradle
