@@ -1,12 +1,16 @@
-package net.sharewire.googlemapsclustering;
+package net.sharewire.mapsclustering.google;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLngBounds;
+
+import net.sharewire.mapsclustering.Cluster;
+import net.sharewire.mapsclustering.ClusterItem;
+import net.sharewire.mapsclustering.QuadTree;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,8 +18,8 @@ import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import static net.sharewire.googlemapsclustering.Preconditions.checkArgument;
-import static net.sharewire.googlemapsclustering.Preconditions.checkNotNull;
+import static net.sharewire.mapsclustering.Preconditions.checkArgument;
+import static net.sharewire.mapsclustering.Preconditions.checkNotNull;
 
 /**
  * Groups multiple items on a map into clusters based on the current zoom level.
@@ -24,7 +28,7 @@ import static net.sharewire.googlemapsclustering.Preconditions.checkNotNull;
  *
  * @param <T> the type of an item to be clustered
  */
-public class ClusterManager<T extends ClusterItem> implements GoogleMap.OnCameraIdleListener {
+public class GoogleClusterManager<T extends ClusterItem> implements GoogleMap.OnCameraIdleListener {
 
     private static final int QUAD_TREE_BUCKET_CAPACITY = 4;
     private static final int DEFAULT_MIN_CLUSTER_SIZE = 1;
@@ -33,7 +37,7 @@ public class ClusterManager<T extends ClusterItem> implements GoogleMap.OnCamera
 
     private final QuadTree<T> mQuadTree;
 
-    private final ClusterRenderer<T> mRenderer;
+    private final GoogleClusterRenderer<T> mRenderer;
 
     private final Executor mExecutor = Executors.newSingleThreadExecutor();
 
@@ -46,7 +50,7 @@ public class ClusterManager<T extends ClusterItem> implements GoogleMap.OnCamera
     /**
      * Defines signatures for methods that are called when a cluster or a cluster item is clicked.
      *
-     * @param <T> the type of an item managed by {@link ClusterManager}.
+     * @param <T> the type of an item managed by {@link GoogleClusterManager}.
      */
     public interface Callbacks<T extends ClusterItem> {
         /**
@@ -73,14 +77,14 @@ public class ClusterManager<T extends ClusterItem> implements GoogleMap.OnCamera
     /**
      * Creates a new cluster manager using the default icon generator.
      * To customize marker icons, set a custom icon generator using
-     * {@link ClusterManager#setIconGenerator(IconGenerator)}.
+     * {@link GoogleClusterManager#setIconGenerator(GoogleIconGenerator)}.
      *
      * @param googleMap the map instance where markers will be rendered
      */
-    public ClusterManager(@NonNull Context context, @NonNull GoogleMap googleMap) {
+    public GoogleClusterManager(@NonNull Context context, @NonNull GoogleMap googleMap) {
         checkNotNull(context);
         mGoogleMap = checkNotNull(googleMap);
-        mRenderer = new ClusterRenderer<>(context, googleMap);
+        mRenderer = new GoogleClusterRenderer<>(context, googleMap);
         mQuadTree = new QuadTree<>(QUAD_TREE_BUCKET_CAPACITY);
     }
 
@@ -89,7 +93,7 @@ public class ClusterManager<T extends ClusterItem> implements GoogleMap.OnCamera
      *
      * @param iconGenerator the custom icon generator that's used for generating marker icons
      */
-    public void setIconGenerator(@NonNull IconGenerator<T> iconGenerator) {
+    public void setIconGenerator(@NonNull GoogleIconGenerator<T> iconGenerator) {
         checkNotNull(iconGenerator);
         mRenderer.setIconGenerator(iconGenerator);
     }

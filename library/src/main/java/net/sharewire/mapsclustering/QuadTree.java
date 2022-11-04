@@ -1,33 +1,33 @@
-package net.sharewire.googlemapsclustering;
+package net.sharewire.mapsclustering;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class QuadTree<T extends QuadTreePoint> {
+public class QuadTree<T extends QuadTreePoint> {
 
     private final int bucketSize;
 
     private QuadTreeNode<T> root;
 
-    QuadTree(int bucketSize) {
+    public QuadTree(int bucketSize) {
         this.bucketSize = bucketSize;
         this.root = createRootNode(bucketSize);
     }
 
-    void insert(@NonNull T point) {
+    public void insert(@NonNull T point) {
         root.insert(point);
     }
 
     @NonNull
-    List<T> queryRange(double north, double west, double south, double east) {
+    public List<T> queryRange(double north, double west, double south, double east) {
         List<T> points = new ArrayList<>();
         root.queryRange(new QuadTreeRect(north, west, south, east), points);
         return points;
     }
 
-    void clear() {
+    public void clear() {
         root = createRootNode(bucketSize);
     }
 

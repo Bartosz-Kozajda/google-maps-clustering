@@ -1,4 +1,4 @@
-package net.sharewire.googlemapsclustering;
+package net.sharewire.mapsclustering.google;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -6,7 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -16,14 +16,19 @@ import android.widget.TextView;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 
-import static net.sharewire.googlemapsclustering.Preconditions.checkNotNull;
+import net.sharewire.mapsclustering.Cluster;
+import net.sharewire.mapsclustering.ClusterItem;
+import net.sharewire.mapsclustering.IconStyle;
+import net.sharewire.mapsclustering.R;
+
+import static net.sharewire.mapsclustering.Preconditions.checkNotNull;
 
 /**
- * The implementation of {@link IconGenerator} that generates icons with the default style
+ * The implementation of {@link GoogleIconGenerator} that generates icons with the default style
  * and caches them for subsequent use. To customize the style of generated icons use
- * {@link DefaultIconGenerator#setIconStyle(IconStyle)}.
+ * {@link GoogleDefaultIconGenerator#setIconStyle(IconStyle)}.
  */
-public class DefaultIconGenerator<T extends ClusterItem> implements IconGenerator<T> {
+public class GoogleDefaultIconGenerator<T extends ClusterItem> implements GoogleIconGenerator<T> {
 
     private static final int[] CLUSTER_ICON_BUCKETS = {10, 20, 50, 100, 500, 1000, 5000, 10000, 20000};
 
@@ -38,7 +43,7 @@ public class DefaultIconGenerator<T extends ClusterItem> implements IconGenerato
     /**
      * Creates an icon generator with the default icon style.
      */
-    public DefaultIconGenerator(@NonNull Context context) {
+    public GoogleDefaultIconGenerator(@NonNull Context context) {
         mContext = checkNotNull(context);
         setIconStyle(createDefaultIconStyle());
     }

@@ -1,17 +1,17 @@
-package net.sharewire.googlemapsclustering;
+package net.sharewire.mapsclustering;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
-final class Preconditions {
+public class Preconditions {
 
-    static <T> T checkNotNull(@Nullable T reference) {
+    public static <T> T checkNotNull(@Nullable T reference) {
         if (reference == null) {
             throw new NullPointerException();
         }
         return reference;
     }
 
-    static void checkArgument(boolean expression) {
+    public static void checkArgument(boolean expression) {
         if (!expression) {
             throw new IllegalArgumentException();
         }

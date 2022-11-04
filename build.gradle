@@ -6,7 +6,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:4.2.0'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -20,6 +20,7 @@ allprojects {
             url "https://maven.google.com"
         }
         google()
+        maven { url 'https://developer.huawei.com/repo/' } // HUAWEI Maven repository
     }
 }
 
@@ -28,14 +29,13 @@ task clean(type: Delete) {
 }
 
 ext {
-    versionCode = 1
-    versionName = '0.1.3'
+    versionCode = 5
+    versionName = '2.0.5'
 
-    minSdkVersion = 16
-    targetSdkVersion = 27
-    compileSdkVersion = 27
-    buildToolsVersion = '26.0.2'
+    minSdkVersion = 19
+    targetSdkVersion = 31
+    compileSdkVersion = 31
+    buildToolsVersion = '30.0.2'
 
-    supportVersion = '27.0.2'
-    playServicesVersion = '11.8.0'
+    playServicesVersion = '18.0.2'
 }

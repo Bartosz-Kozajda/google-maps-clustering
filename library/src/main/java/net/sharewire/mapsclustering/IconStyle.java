@@ -1,12 +1,13 @@
-package net.sharewire.googlemapsclustering;
+package net.sharewire.mapsclustering;
 
 import android.content.Context;
-import android.support.annotation.ColorInt;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
+import androidx.annotation.ColorInt;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
 
-import static net.sharewire.googlemapsclustering.Preconditions.checkNotNull;
+import androidx.core.content.ContextCompat;
+
+import static net.sharewire.mapsclustering.Preconditions.checkNotNull;
 
 /**
  * Represents the visual style of map marker icons. Supports customization

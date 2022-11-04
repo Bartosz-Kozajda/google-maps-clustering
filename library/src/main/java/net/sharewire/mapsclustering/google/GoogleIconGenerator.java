@@ -1,15 +1,18 @@
-package net.sharewire.googlemapsclustering;
+package net.sharewire.mapsclustering.google;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.google.android.gms.maps.model.BitmapDescriptor;
+
+import net.sharewire.mapsclustering.Cluster;
+import net.sharewire.mapsclustering.ClusterItem;
 
 /**
  * Generates icons for clusters and cluster items. Note that its implementations
  * should cache generated icons for subsequent use. For the example implementation see
- * {@link DefaultIconGenerator}.
+ * {@link GoogleDefaultIconGenerator}.
  */
-public interface IconGenerator<T extends ClusterItem> {
+public interface GoogleIconGenerator<T extends ClusterItem> {
     /**
      * Returns an icon for the given cluster.
      *

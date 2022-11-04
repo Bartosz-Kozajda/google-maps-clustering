@@ -1,13 +1,13 @@
-package net.sharewire.googlemapsclustering;
+package net.sharewire.mapsclustering.google;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.TypeEvaluator;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.view.animation.FastOutSlowInInterpolator;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptor;
@@ -15,14 +15,17 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import net.sharewire.mapsclustering.Cluster;
+import net.sharewire.mapsclustering.ClusterItem;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static net.sharewire.googlemapsclustering.Preconditions.checkNotNull;
+import static net.sharewire.mapsclustering.Preconditions.checkNotNull;
 
-class ClusterRenderer<T extends ClusterItem> implements GoogleMap.OnMarkerClickListener {
+class GoogleClusterRenderer<T extends ClusterItem> implements GoogleMap.OnMarkerClickListener {
 
     private static final int BACKGROUND_MARKER_Z_INDEX = 0;
 
@@ -34,14 +37,14 @@ class ClusterRenderer<T extends ClusterItem> implements GoogleMap.OnMarkerClickL
 
     private final Map<Cluster<T>, Marker> mMarkers = new HashMap<>();
 
-    private IconGenerator<T> mIconGenerator;
+    private GoogleIconGenerator<T> mIconGenerator;
 
-    private ClusterManager.Callbacks<T> mCallbacks;
+    private GoogleClusterManager.Callbacks<T> mCallbacks;
 
-    ClusterRenderer(@NonNull Context context, @NonNull GoogleMap googleMap) {
+    GoogleClusterRenderer(@NonNull Context context, @NonNull GoogleMap googleMap) {
         mGoogleMap = googleMap;
         mGoogleMap.setOnMarkerClickListener(this);
-        mIconGenerator = new DefaultIconGenerator<>(context);
+        mIconGenerator = new GoogleDefaultIconGenerator<>(context);
     }
 
     @Override
@@ -65,11 +68,11 @@ class ClusterRenderer<T extends ClusterItem> implements GoogleMap.OnMarkerClickL
         return false;
     }
 
-    void setCallbacks(@Nullable ClusterManager.Callbacks<T> listener) {
+    void setCallbacks(@Nullable GoogleClusterManager.Callbacks<T> listener) {
         mCallbacks = listener;
     }
 
-    void setIconGenerator(@NonNull IconGenerator<T> iconGenerator) {
+    void setIconGenerator(@NonNull GoogleIconGenerator<T> iconGenerator) {
         mIconGenerator = iconGenerator;
     }
 
@@ -83,9 +86,19 @@ class ClusterRenderer<T extends ClusterItem> implements GoogleMap.OnMarkerClickL
             }
         }
 
-        for (Cluster<T> cluster : mMarkers.keySet()) {
-            if (!clusters.contains(cluster)) {
-                clustersToRemove.add(cluster);
+        for (Cluster<T> existingCluster : mMarkers.keySet()) {
+            int indexOfExistingCluster = clusters.indexOf(existingCluster);
+            boolean newClustersContainsExistingCluster = indexOfExistingCluster >= 0;
+
+            if (!newClustersContainsExistingCluster) {
+                clustersToRemove.add(existingCluster);
+            } else {
+                Cluster<T> clusterWithNewData = clusters.get(indexOfExistingCluster);
+                boolean itemsAreEqual = existingCluster.getItems().containsAll(clusterWithNewData.getItems());
+                if(!itemsAreEqual) {
+                    clustersToRemove.add(existingCluster);
+                    clustersToAdd.add(clusterWithNewData);
+                }
             }
         }
 
