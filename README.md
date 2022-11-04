@@ -1,6 +1,6 @@
 # Google Maps Clustering for Android
 
-[ ![Download](https://api.bintray.com/packages/sharewire/maven/google-maps-clustering/images/download.svg) ](https://bintray.com/sharewire/maven/google-maps-clustering/_latestVersion) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Google%20Maps%20Clustering%20for%20Android-blue.svg?style=flat)](https://android-arsenal.com/details/1/6552) <a href="http://www.methodscount.com/?lib=net.sharewire%3Agoogle-maps-clustering%3A0.1.2-beta"><img src="https://img.shields.io/badge/Methods count-193-e91e63.svg"/></a>
+[![](https://jitpack.io/v/FutureMind/google-maps-clustering.svg)](https://jitpack.io/#FutureMind/google-maps-clustering)
 
 A fast marker clustering library for Google Maps Android API.
 
@@ -10,16 +10,16 @@ A fast marker clustering library for Google Maps Android API.
 Why not use [Google Maps Android API Utility Library](https://github.com/googlemaps/android-maps-utils)? Because it's very slow for large amounts of markers, which causes skipping frames and ANRs (see [Issue #29](https://github.com/googlemaps/android-maps-utils/issues/29), [Issue #82](https://github.com/googlemaps/android-maps-utils/issues/82)). But this library can easily handle thousands of markers (the video above demonstrates the sample application with 20 000 markers running on Nexus 5).
 
 ## Installation
-1. Make sure you have JCenter in your repository list:
-```groovy
+1. Make sure you have jitpack.io in your repository list:
+```kotlin
 repositories {
-    jcenter()
+    maven { url = uri("https://jitpack.io") }
 }
 ```
 2. Add a dependency to your build.gradle:
-```groovy
+```kotlin
 dependencies {
-    compile 'net.sharewire:google-maps-clustering:0.1.3'
+    implementation("com.github.FutureMind:google-maps-clustering:v2.0.5")
 }
 ```
 
