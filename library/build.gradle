@@ -34,7 +34,6 @@ dependencies {
     implementation 'androidx.annotation:annotation:1.4.0'
     implementation 'androidx.interpolator:interpolator:1.0.0'
     implementation "com.google.android.gms:play-services-maps:$playServicesVersion"
-    implementation 'com.huawei.hms:maps:6.5.1.300'
 }
 
 afterEvaluate {

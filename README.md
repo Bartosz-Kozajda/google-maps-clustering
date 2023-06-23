@@ -19,7 +19,7 @@ repositories {
 2. Add a dependency to your build.gradle:
 ```kotlin
 dependencies {
-    implementation("com.github.FutureMind:google-maps-clustering:v2.0.5")
+    implementation("com.github.Bartosz-Kozajda:google-maps-clustering:v2.0.6")
 }
 ```
 

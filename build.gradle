@@ -20,7 +20,6 @@ allprojects {
             url "https://maven.google.com"
         }
         google()
-        maven { url 'https://developer.huawei.com/repo/' } // HUAWEI Maven repository
     }
 }
 
@@ -30,7 +29,7 @@ task clean(type: Delete) {
 
 ext {
     versionCode = 5
-    versionName = '2.0.5'
+    versionName = '2.0.6'
 
     minSdkVersion = 19
     targetSdkVersion = 31
